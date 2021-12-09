@@ -1,3 +1,5 @@
-from django.shortcuts import render
+from .models import Transaction
 
-# Create your views here.
+
+def list(request):
+    pass
