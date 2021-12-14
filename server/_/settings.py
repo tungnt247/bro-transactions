@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'accounts.apps.AccountsConfig',
     'trades.apps.TradesConfig',
 ]
@@ -30,6 +31,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'social.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+)
 
 ROOT_URLCONF = '_.urls'
 
@@ -91,5 +98,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 AUTH_USER_MODEL = 'accounts.User'
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+SOCIAL_AUTH_FACEBOOK_KEY = '884510408926360'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'cb07573a722ae31c6d9af3800d98e4e2'
+SOCIAL_AUTH_USER_MODEL = 'accounts.User'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='200601445051-6h5ud2tqfglvdigjsual4fq63ods9m72.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET ='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'

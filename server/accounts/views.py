@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def profile(request):
+    import pdb;pdb.set_trace()
+    return None
