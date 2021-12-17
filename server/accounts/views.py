@@ -19,10 +19,6 @@ def user_login(request):
             return render(request, 'accounts/login.html')
 
 
-def create_user_success(request):
-    return render(request,'create_user_success.html')
-
-
 def register(request):
     email = request.POST.get('email')
     password = request.POST.get('password')
@@ -32,8 +28,8 @@ def register(request):
         if not email or not password or not password_repeat:
             return render(request, 'accounts/register.html')
 
-        users = User.objects.filter(email=email)
-        if len(users) > 0:
+        user_already_existed = len(User.objects.filter(email=email)) > 0
+        if user_already_existed:
             return render(request, 'accounts/error.html')
 
         if password != password_repeat:
@@ -44,11 +40,11 @@ def register(request):
         user.password = make_password(password)
         user.username = email.split("@")[0]
         user.save()
-        return redirect('/')
+        return redirect('homepage')
     else:
         return render(request, 'accounts/register.html')
 
 
 def log_out(request):
     request.session.flush()
-    return redirect('/')
+    return redirect('homepage')
