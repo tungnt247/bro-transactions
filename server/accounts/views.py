@@ -1,22 +1,26 @@
 from django.shortcuts import render, redirect
 from .models import User
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 
 def home(request):
-       return render(request, 'home.html')
+    return render(request, 'home.html')
 
 
-def user_login(request):
+def log_in(request):
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         user = authenticate(username=username, password=password)
-        if user.is_active:
+
+        if user is not None:
+            login(request, user)
             return render(request, 'home.html')
         else:
-            return render(request, 'accounts/login.html')
+            return render(request, 'accounts/error.html')
+
+    return render(request, 'accounts/log_in.html')
 
 
 def register(request):
@@ -33,7 +37,7 @@ def register(request):
             return render(request, 'accounts/error.html')
 
         if password != password_repeat:
-            return render(request, 'accounts/error1.html')
+            return render(request, 'accounts/error.html')
 
         user = User()
         user.email = email
