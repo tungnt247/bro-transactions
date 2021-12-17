@@ -1,18 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="content-section">
-        <form method="POST">
+    <div class="w-[500px] shadow mx-auto mt-[100px] rounded p-6 flex flex-col items-center">
+        <form method="POST" class="mb-4">
             {% csrf_token %}
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required />
-
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required />
-            
-            <label for="password_repeat">Re-enter your password:</label>
-            <input type="password" name="password_repeat" id="password_repeat" required />
-
-            <input type="submit" value="Sign Up" />
+            <input
+                type="email" name="email" id="email" required
+                placeholder="Your email" 
+                class="border rounded w-full mb-2 p-2"
+            />
+            <input
+                type="password" name="password" id="password" required
+                placeholder="Your password"
+                class="border rounded w-full mb-2 p-2"
+            />
+            <input
+                type="password" name="password_repeat" id="password_repeat" required
+                placeholder="Re-enter your password"
+                class="border rounded w-full mb-2 p-2"
+            />
+            <input
+                type="submit" value="Sign Up"
+                class="rounded w-full cursor-pointer border rounded p-2 bg-blue-800 text-white uppercase hover:bg-blue-700 hover:font-bold"
+            />
         </form>
+        <a href="#" class="text-blue-900 hover:underline hover:italic">Forgot your password?</a>
     </div>
 {% endblock content%}
