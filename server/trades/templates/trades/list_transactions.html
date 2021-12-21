@@ -1,24 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
 <div>
-    <h1>Transactions</h1>
-    <table>
-      {% for transaction in transactions %}
-      <tr>
-        <th>amount</th>
-        <th>description</th>
-        <th>executor</th>
-        <th>created_at</th>
-      </tr>
-      <tr>
-        <td>{{ transaction.amount }}</td>
-        <td>{{ transaction.description }}</td>
-        <td>{{ transaction.executor }}<td>
-        <td>{{ transaction.created_at }}</td>
-        <td><a href="{% url "update" transaction.id %}">Update</a></td>
-        <td><a href="{% url "delete" transaction.id %}">Delete</a></td>
-      </tr>
+    <div class="flex ml-[100px] mr-[100px]">
+        <div class="flex-1 p-4 pl-0">
+            <div class="flex justify-between items-center">
+                <h1 class="font-bold text-4xl">Transactions</h1>
+                <a
+                    href="{% url 'create_tran' %}"
+                    class="text-blue-900 hover:underline hover:italic"
+                >
+                    Create a new transaction
+                </a>
+            </div>
+            <table class="mt-2 table-fixed text-left">
+                <thead>
+                    <tr>
+                        <th class="w-[200px]">Description</th>
+                        <th class="w-[120px]">Amount (VND)</th>
+                        <th class="w-[120px]">Source User</th>
+                        <th class="w-[120px]">Target User</th>
+                        <th class="w-[120px]">Date</th>
+                        <th class="w-[120px]">Status</th>
+                        <th class="w-[60px]"></th>
+                        <th class="w-[60px]"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.description }}</td>
+                        <td>{{ transaction.amount }}</td>
+                        <td>{{ transaction.creator }}</td>
+                        <td>{{ transaction.executor }}</td>
+                        <td>{{ transaction.created_at|date:"d-m-Y" }}</td>
+                        <td>
+                            {% if transaction.status == 3 %}
+                                Completed
+                            {% elif transaction.status == 2 %}
+                                Confirmed
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a
+                                href="{% url 'update' transaction.id %}"
+                                class="text-orange-400 hover:text-orange-600 hover:italic hover:underline"
+                            >
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <a
+                                href="{% url 'delete' transaction.id %}"
+                                class="text-red-400 hover:text-red-600 hover:italic hover:underline"
+                            >
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
 
-    {% endfor %}
-    </table>
-
-    <a href="{% url "create_tran" %}">Create a new transaction</a>
+        <div class="h-screen bg-slate-300 flex-1 text-center pt-[50px] text-slate-600">
+            Reserved area for future feature
+        </div>
+    </div>
 </div>
+{% endblock content%}

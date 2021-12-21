@@ -4,10 +4,6 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 
 
-def home(request):
-    return render(request, 'home.html')
-
-
 def log_in(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -16,7 +12,7 @@ def log_in(request):
 
         if user is not None:
             login(request, user)
-            return render(request, 'home.html')
+            return redirect('homepage')
         else:
             return render(request, 'accounts/error.html')
 

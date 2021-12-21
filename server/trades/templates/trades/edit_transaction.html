@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="w-[500px] shadow mx-auto mt-[100px] rounded p-6 flex flex-col items-center">
+    <h1 class="font-bold text-xl">Edit transaction</h1>
+    <form method="POST" class="mb-4 mt-4 w-full">
+        {% csrf_token %}
+        <input
+            type="text" name="description" id="description" required
+            placeholder="What is this about?.." 
+            class="border rounded w-full mb-2 p-2"
+            value="{{ transaction.description }}"
+        />
+        <div class="flex items-center">
+            <input
+                type="number" name="amount" id="amount" required
+                placeholder="How much?.."
+                class="border rounded w-full mb-2 p-2"
+                value="{{transaction.amount}}"
+                max="999999999"
+            />
+            <span class="ml-2">
+                VND
+            </span>
+        </div>
+        <select name="executor" placeholder="Who is that?.." class="border rouned w-full mb-2 p-2 bg-white">
+            {% for user in users %}
+                <option
+                    {% if transaction.executor.id == user.id %}
+                    selected
+                    {% endif %}
+                    value="{{ user.id }}">{{ user }}</option>
+            {% endfor%}
+        </select>
+        <input
+            type="submit" value="Update transaction"
+            class="rounded w-full cursor-pointer rounded p-2 bg-blue-800 text-white uppercase hover:bg-blue-700 hover:font-bold"
+        />
+    </form>
+</div>
+{% endblock content %}

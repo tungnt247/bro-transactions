@@ -6,7 +6,7 @@ from accounts.models import User
 def list(request):
     if not request.user.is_authenticated:
         return redirect('log_in')
-  
+
     transactions = Transaction.objects.all()
     return render(request, 'trades/list_transactions.html', {'transactions': transactions})
 
@@ -14,7 +14,7 @@ def list(request):
 def create(request):
     if not request.user.is_authenticated:
         return redirect('log_in')
-    
+
     if request.method == 'POST':
         excutors = User.objects.filter(
             id=request.POST.get('executor')
@@ -44,7 +44,7 @@ def update_transaction(request, tran_id):
 
         if len(transactions) == 0:
             return render(request, "trades/error.html")
-        
+
         if not request.POST.get('description'):
             return render(request, "trades/error.html")
 
@@ -57,14 +57,14 @@ def update_transaction(request, tran_id):
         transactions[0].description = request.POST.get('description')
         transactions[0].save()
         return redirect("transactions")
-    
+
     transactions = Transaction.objects.filter(id=tran_id)
     if len(transactions) == 0:
         return redirect("trades/error.html")
 
     users = User.objects.all().exclude(email=request.user.email)
-    return render(request, 'trades/edit_form.html', {'transaction':transactions[0], 'users': users})
- 
+    return render(request, 'trades/edit_transaction.html', {'transaction': transactions[0], 'users': users})
+
 
 def delete(request, tran_id):
     if not request.user.is_authenticated:
@@ -76,4 +76,3 @@ def delete(request, tran_id):
 
     transactions.delete()
     return redirect("transactions")
-

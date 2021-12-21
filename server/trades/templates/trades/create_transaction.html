@@ -1,17 +1,35 @@
-<h1>Make your new transactions</h1>
-<form method="POST">
-    {% csrf_token %}
-    <label for="amount">Amount</label>
-    <input type="number" id="amount" name="amount" value="{{transaction.amount}}">
-    <label for="description">Description</label>
-    <input type="text" id="description" name="description"/>
-
-    <label for="executor">Executor</lablel>
-    <select name="executor">
-    {% for user in users %}
-        <option hidden>Choose email</option>
-        <option value="{{ user.id }}">{{ user }}</option>
-    {% endfor%}
-    </select>
-    <input type="submit" value="Submit"/>
-</form>
+{% extends "base.html" %}
+{% block content %}
+    <div class="w-[500px] shadow mx-auto mt-[100px] rounded p-6 flex flex-col items-center">
+        <h1 class="font-bold text-xl">Make your new transaction</h1>
+        <form method="POST" class="mb-4 mt-4">
+            {% csrf_token %}
+            <input
+                type="text" name="description" id="description" required
+                placeholder="What is this about?.." 
+                class="border rounded w-full mb-2 p-2"
+            />
+            <div class="flex items-center">
+                <input
+                    type="number" name="amount" id="amount" required
+                    placeholder="How much?.."
+                    class="border rounded w-full mb-2 p-2"
+                    max="999999999"
+                />
+                <span class="ml-2">
+                    VND
+                </span>
+            </div>
+            <select name="executor" placeholder="Who is that?.." class="border rouned w-full mb-2 p-2 bg-white" required>
+                <option value="">Who is that?...</option>
+                {% for user in users %}
+                    <option value="{{ user.id }}">{{ user }}</option>
+                {% endfor%}
+            </select>
+            <input
+                type="submit" value="Create transaction"
+                class="rounded w-full cursor-pointer rounded p-2 bg-blue-800 text-white uppercase hover:bg-blue-700 hover:font-bold"
+            />
+        </form>
+    </div>
+{% endblock content %}

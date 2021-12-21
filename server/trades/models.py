@@ -5,6 +5,7 @@ from accounts.models import User
 class TransactionStatus(_.IntegerChoices):
     PENDING = 1
     CONFIRMED = 2
+    DONE = 3
 
 
 class Transaction(_.Model):
