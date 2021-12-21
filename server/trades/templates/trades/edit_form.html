@@ -1,0 +1,19 @@
+<h1>Edit form</h1>
+<form method="POST">
+    {% csrf_token %}
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description" value="{{ transaction.description }}">
+    <label for="amount">Amount</label>
+    <input type="number" id="amount" name="amount" value="{{transaction.amount}}">
+
+    <label for="executor">Executor</lablel>
+    <select name="executor">
+    {% for user in users %}
+        <option 
+        {% if transaction.executor.id == user.id %}
+        selected
+        {% endif %} value="{{ user.id }}">{{ user.email }}</option>
+    {% endfor%}
+    </select>
+    <input type="submit" value="Submit"/>
+</form>
